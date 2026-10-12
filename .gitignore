@@ -1,0 +1,8 @@
+/data/
+/bin/
+/study-todo
+/study-todo.exe
+*.log
+*.tmp
+.DS_Store
+.env

@@ -1,0 +1,196 @@
+{
+  "weeks": [
+    {
+      "id": "week-01",
+      "number": 1,
+      "title": "搭好环境，写出第一个 Go 通讯录",
+      "goal": "从只会 cd、ls 起步，在 Ubuntu 上运行 Go CLI，建立可复现的学习和 Git 习惯。",
+      "tasks": [
+        {"id":"w01-t01","title":"准备 Ubuntu、Go 和项目目录","category":"Linux","minutes":180,"description":"操作：在 Ubuntu 中建立 ~/projects，检查 go version、git --version，创建 contacts 项目并运行 go mod init contacts 和 hello.go。安装方法以当前官方工具输出为准，教程截图只作参考。验收：终端能执行 go run .，笔记记录系统、Go 版本和源码路径。","resourceURL":"https://missing-semester-cn.github.io/","resourceLabel":"计算机教育中缺失的一课"},
+        {"id":"w01-t02","title":"用已有 C/Python 基础学习 Go 基本语法","category":"Go","minutes":180,"description":"操作：练习变量、类型、if、for、函数、切片和 map，各写一个小程序；比较 Go 与 C/Python 的不同。验收：不用复制教程，写出统计 10 个姓名出现次数的函数并解释返回值。","resourceURL":"https://gobyexample-cn.github.io/","resourceLabel":"Go by Example 中文"},
+        {"id":"w01-t03","title":"实现内存通讯录 CLI","category":"项目","minutes":180,"description":"操作：定义 Contact 结构体，用切片保存姓名、电话，提供新增、列表和按姓名查询命令；先只保存在内存。验收：终端新增 3 条联系人，可查到指定记录，退出后数据消失的原因能说清。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周 Go 学习目录"},
+        {"id":"w01-t04","title":"处理 CLI 输入与错误","category":"Go","minutes":180,"description":"操作：使用 bufio 读取输入，校验空姓名、空电话与未知命令；用返回 error 的函数拆分新增和查询。验收：至少执行 5 个错误输入，程序不崩溃且给出可理解的提示。","resourceURL":"https://gobyexample-cn.github.io/","resourceLabel":"Go by Example：错误处理与字符串"},
+        {"id":"w01-t05","title":"掌握文件、路径和终端帮助","category":"Linux","minutes":150,"description":"操作：练习 pwd、mkdir、cp、mv、cat、less、find、man，分别定位源码与工作目录；只在练习目录操作。验收：独立复制项目到临时目录，用终端找到 main.go，并说明相对路径与绝对路径。","resourceURL":"https://missing-semester-cn.github.io/","resourceLabel":"缺失的一课：Shell 与工具"},
+        {"id":"w01-t06","title":"数组、复杂度与两道基础题","category":"算法","minutes":150,"description":"操作：用 Go 写线性查找和二分查找，手画执行过程；对各做 3 组边界输入。验收：能解释 O(n)、O(log n) 及二分查找的排序前提，保留可运行代码和错题笔记。","resourceURL":"https://gobyexample-cn.github.io/","resourceLabel":"Go by Example：切片与函数"},
+        {"id":"w01-t07","title":"第一次 Git 提交与学习记录","category":"Git","minutes":120,"description":"操作：git init，添加 .gitignore，学习 status、diff、add、commit、log；写明启动方法并提交当前通讯录。验收：仓库至少 2 次有意义的提交，能从 diff 解释每次改动，没有把二进制或个人数据加入 Git。","resourceURL":"https://missing-semester-cn.github.io/","resourceLabel":"缺失的一课：版本控制"},
+        {"id":"w01-t08","title":"本周复盘与主动休息","category":"项目","minutes":60,"description":"操作：用 30 分钟回顾困难、记录实际投入和下周 3 个小目标，再安排 30 分钟离开屏幕散步或伸展。验收：留下 5 句复盘；未完成任务调整到下周，保持每周总预算 20 小时。","resourceURL":"","resourceLabel":""}
+      ]
+    },
+    {
+      "id": "week-02",
+      "number": 2,
+      "title": "把通讯录保存成 JSON",
+      "goal": "掌握结构体、方法、指针和文件读写，让联系人在程序重启后仍然存在。",
+      "tasks": [
+        {"id":"w02-t01","title":"结构体、方法和指针","category":"Go","minutes":180,"description":"操作：为 Contact 增加 ID，把新增、查询、删除封装为方法；对比值传递与指针传递。验收：用一段不超过 30 行的代码说明修改结构体为何需要指针，并完成通讯录重构。","resourceURL":"https://gobyexample-cn.github.io/","resourceLabel":"Go by Example：结构体、方法、指针"},
+        {"id":"w02-t02","title":"用 encoding/json 保存联系人","category":"项目","minutes":180,"description":"操作：用标准库 encoding/json 编码和解码联系人；启动时读取 contacts.json，新增或删除后保存。验收：新建 3 条记录、退出并重启后仍能查询，JSON 文件可直接阅读。","resourceURL":"https://gobyexample-cn.github.io/","resourceLabel":"Go by Example：JSON 与文件"},
+        {"id":"w02-t03","title":"让缺失、损坏文件可诊断","category":"Go","minutes":180,"description":"操作：区分文件不存在、权限不足、JSON 损坏三类错误；为首次启动创建空数据，用临时文件保存后替换，损坏时保留原文件。验收：手动制造缺失与错误 JSON，终端提示对应原因，原数据没有被覆盖。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：文件操作与错误处理"},
+        {"id":"w02-t04","title":"为通讯录函数写第一批测试","category":"Go","minutes":180,"description":"操作：学习 testing 与表驱动测试，为新增、查询、删除和 JSON 往返各写测试，使用 t.TempDir 隔离文件。验收：go test ./... 通过，至少一个测试先暴露你修复的边界错误。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：Go 单元测试"},
+        {"id":"w02-t05","title":"Linux 权限、重定向与管道","category":"Linux","minutes":150,"description":"操作：练习 chmod、ls -l、>、>>、|、wc，在练习目录改变文件权限并观察 Go 读写错误。验收：能解释 rwx 和 owner/group/other，将通讯录输出重定向到文件并统计行数。","resourceURL":"https://missing-semester-cn.github.io/","resourceLabel":"缺失的一课：Shell 工具与脚本"},
+        {"id":"w02-t06","title":"哈希表与字符串题","category":"算法","minutes":150,"description":"操作：用 Go map 写字符计数和两数之和，分别覆盖空输入、重复元素和不存在答案。验收：两道题独立完成，能解释时间和空间复杂度，记录自己最初的错误。","resourceURL":"https://gobyexample-cn.github.io/","resourceLabel":"Go by Example：Map 与字符串"},
+        {"id":"w02-t07","title":"学习分支、合并和 GitHub 推送","category":"Git","minutes":120,"description":"操作：在 feature/json 分支完成一处小修改，合并回主分支；创建自己的 GitHub 仓库并按网页提示配置远程与推送。验收：网页能看到源码、README 和提交记录，从新目录 clone 后能运行。","resourceURL":"https://missing-semester-cn.github.io/","resourceLabel":"缺失的一课：版本控制"},
+        {"id":"w02-t08","title":"本周复盘与主动休息","category":"项目","minutes":60,"description":"操作：30 分钟复盘文件保存、测试和 Git，列出 2 个尚未理解的点；30 分钟离开屏幕活动。验收：记录本周实际时长和一个下周需要验证的问题。","resourceURL":"","resourceLabel":""}
+      ]
+    },
+    {
+      "id": "week-03",
+      "number": 3,
+      "title": "给通讯录提供 HTTP API",
+      "goal": "理解浏览器到 Go 服务的请求流程，使用 net/http 提供联系人增删查接口。",
+      "tasks": [
+        {"id":"w03-t01","title":"用 net/http 启动本机服务","category":"Go","minutes":180,"description":"操作：建立 /health 与 GET /contacts，绑定 127.0.0.1:8080，返回 JSON 和正确 Content-Type。验收：浏览器与 curl 都能获取联系人，能说明监听地址、端口和处理函数各做什么。","resourceURL":"https://gobyexample-cn.github.io/","resourceLabel":"Go by Example：HTTP 服务"},
+        {"id":"w03-t02","title":"实现新增、删除与状态码","category":"项目","minutes":180,"description":"操作：实现 POST /contacts 与 DELETE /contacts/{id}，限制请求体大小，校验输入并返回 400、404、405 等状态。验收：用 curl 执行成功和失败请求，记录至少 6 组请求、响应和状态码。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：HTTP 与 Web 开发"},
+        {"id":"w03-t03","title":"保护共享状态并测试 API","category":"Go","minutes":180,"description":"操作：把联系人操作放在加锁的存储层，使用 httptest 覆盖 API；运行 go test -race ./...。验收：两次并发新增不会丢记录，测试中覆盖非法 JSON 和未知 ID，竞态检测通过。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：并发与单元测试"},
+        {"id":"w03-t04","title":"串起 HTTP、TCP 与请求日志","category":"计算机基础","minutes":180,"description":"操作：画出客户端、TCP 连接、HTTP 请求、Go handler、JSON 文件的流程；给服务记录方法、路径、状态和耗时。验收：能口述 GET 与 POST、请求头与请求体、HTTP 与 TCP 的关系，并用一条日志定位一次请求。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：网络编程与 HTTP"},
+        {"id":"w03-t05","title":"用 Linux 检查进程与端口","category":"Linux","minutes":150,"description":"操作：练习 ps、ss -lntp、curl、kill，启动两次相同端口的服务并分析报错；用 Ctrl+C 正常停止。验收：能找到监听 8080 的进程，解释端口占用与连接被拒绝的区别。","resourceURL":"https://missing-semester-cn.github.io/","resourceLabel":"缺失的一课：命令行环境与调试"},
+        {"id":"w03-t06","title":"栈、队列与链表基础","category":"算法","minutes":150,"description":"操作：用切片实现栈和队列，写有效括号判断；手画并实现单链表反转。验收：两道题通过自建边界用例，能解释链表反转时为什么先保存 next。","resourceURL":"https://gobyexample-cn.github.io/","resourceLabel":"Go by Example：切片与结构体"},
+        {"id":"w03-t07","title":"给 GitHub 项目补全接口说明","category":"Git","minutes":120,"description":"操作：README 加入接口表、curl 示例、测试命令和当前限制；在分支修改并阅读 diff 后推送。验收：同学按文档能启动服务并新增一条联系人，记录其一个使用反馈。","resourceURL":"https://missing-semester-cn.github.io/","resourceLabel":"缺失的一课：版本控制"},
+        {"id":"w03-t08","title":"本周复盘与主动休息","category":"项目","minutes":60,"description":"操作：30 分钟从浏览器请求讲到文件保存，标出说不清的环节；30 分钟离屏活动。验收：留下流程图与 3 条复盘，实际时长超预算时缩减下周任务范围。","resourceURL":"","resourceLabel":""}
+      ]
+    },
+    {
+      "id": "week-04",
+      "number": 4,
+      "title": "把通讯录迁移到 MySQL",
+      "goal": "理解表、SQL、索引和 database/sql，用数据库完成通讯录 CRUD 并保存可演示版本。",
+      "tasks": [
+        {"id":"w04-t01","title":"准备本地 MySQL 并设计联系人表","category":"数据库","minutes":180,"description":"操作：在 Ubuntu 本机准备 MySQL，创建学习库与权限受限的应用用户；设计 contacts 表和唯一约束，写建表 SQL。验收：命令行完成插入、查询、更新、删除，能解释主键、NOT NULL 与唯一约束。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：Go 操作 MySQL"},
+        {"id":"w04-t02","title":"用 database/sql 连接 MySQL","category":"Go","minutes":180,"description":"操作：为通讯录项目引入 MySQL 驱动，使用 database/sql、PingContext 与参数化查询；连接串从环境变量读取。验收：Go 能新增和查询联系人，数据库密码没有进入 Git，连接失败时能给出明确错误。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：database/sql 与 MySQL"},
+        {"id":"w04-t03","title":"替换 HTTP 服务的存储实现","category":"项目","minutes":180,"description":"操作：保留 HTTP 请求格式，把文件存储替换为数据库 CRUD；为请求使用 context 超时，正确关闭 rows 并检查 rows.Err。验收：原有 curl 演示仍可用，重启服务后数据保留，重复电话和不存在 ID 都得到明确响应。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：MySQL 与 Context"},
+        {"id":"w04-t04","title":"检查索引与数据库边界","category":"数据库","minutes":180,"description":"操作：准备一批测试联系人，用 EXPLAIN 比较有无姓名索引的查询；测试空值、重复键和数据库停机。验收：保存建表脚本、EXPLAIN 结果和错误处理说明，能解释索引为何有读写成本。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：MySQL 学习条目"},
+        {"id":"w04-t05","title":"进程、线程、文件与 Linux 日志","category":"计算机基础","minutes":150,"description":"操作：结合 ps、top、/proc 观察 Go 与 MySQL 进程，写下进程、线程、文件描述符的区别；重定向服务日志并用 tail 查看。验收：能解释程序与进程不同，定位一次连接失败在客户端、服务还是数据库。","resourceURL":"https://missing-semester-cn.github.io/","resourceLabel":"缺失的一课：调试与性能分析"},
+        {"id":"w04-t06","title":"排序与双指针练习","category":"算法","minutes":150,"description":"操作：手写一种基础排序，再用 sort 包练习有序数组去重与移动零；每题先写思路再编码。验收：2 道题覆盖空数组、全重复元素，说明排序和双指针的复杂度。","resourceURL":"https://gobyexample-cn.github.io/","resourceLabel":"Go by Example：排序"},
+        {"id":"w04-t07","title":"通讯录里程碑与第一次岗位收集","category":"求职","minutes":120,"description":"操作：为通讯录补启动、建表、环境变量、测试说明并推送；收集北上广深杭 10 个 Go 后端实习岗位，记录技能、城市、到岗时长和投递入口。验收：有可运行通讯录与岗位表，注明宜昌就读、可实习时间和需要确认的到岗安排。","resourceURL":"","resourceLabel":""},
+        {"id":"w04-t08","title":"本周复盘与主动休息","category":"项目","minutes":60,"description":"操作：30 分钟演示从 CLI 到 JSON、HTTP、MySQL 的变化，列出下阶段设备预约的最小功能；30 分钟离屏休息。验收：提交通讯录演示记录和 5 条设备预约需求，不给尚未实现的能力写结论。","resourceURL":"","resourceLabel":""}
+      ]
+    },
+    {
+      "id": "week-05",
+      "number": 5,
+      "title": "开始实验室设备预约项目",
+      "goal": "以实验室场景设计用户、设备与预约模型，做出可用的最小 API，并开始第一批投递。",
+      "tasks": [
+        {"id":"w05-t01","title":"定义预约需求与项目结构","category":"项目","minutes":180,"description":"操作：新建 lab-booking 仓库，定义用户、设备、时段、预约状态；约定学生预约与管理员管理两个角色，拆分 handler/service/store。验收：README 有 5 个用户场景、目录说明和明确暂不实现的功能，项目能返回 /health。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：Go Web 开发"},
+        {"id":"w05-t02","title":"设计 MySQL 表与迁移脚本","category":"数据库","minutes":180,"description":"操作：设计 users、devices、bookings，使用外键或明确的关联校验；保存可重复执行的迁移与演示数据脚本。验收：从空学习库可重建数据，能说明每张表的主键、时间字段和预约状态。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：MySQL"},
+        {"id":"w05-t03","title":"实现设备列表和预约 API","category":"项目","minutes":180,"description":"操作：实现设备列表、创建预约和个人预约列表，校验起止时间、设备存在与预约人；先使用明确标注的本机演示身份。验收：curl 完成一个预约流程，错误时间和未知设备返回 400 或 404，README 说明演示身份的限制。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：HTTP 与数据库"},
+        {"id":"w05-t04","title":"统一错误、日志和 Context","category":"Go","minutes":180,"description":"操作：统一 JSON 错误结构，给请求添加请求 ID 与耗时日志；把 context 传入数据库操作并设置超时。验收：一次失败请求可通过请求 ID 找到日志，取消请求后查询能结束，接口没有泄露密码或原始连接串。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：Context 与日志"},
+        {"id":"w05-t05","title":"Linux 环境变量与 DNS 请求流程","category":"计算机基础","minutes":150,"description":"操作：在 Shell 设置应用配置，用 printenv 检查非敏感变量；画出域名解析、TCP 建连、HTTP 请求的顺序，比较 localhost 与 IP。验收：能用 curl -v 解释一次请求连接到哪里，配置不硬编码在源码中。","resourceURL":"https://missing-semester-cn.github.io/","resourceLabel":"缺失的一课：命令行环境"},
+        {"id":"w05-t06","title":"树的遍历与递归","category":"算法","minutes":150,"description":"操作：用 Go 定义二叉树节点，实现前序遍历与最大深度；手画递归调用栈，并覆盖空树和单节点。验收：2 道题独立完成，能解释递归终止条件和时间、空间复杂度。","resourceURL":"https://gobyexample-cn.github.io/","resourceLabel":"Go by Example：递归"},
+        {"id":"w05-t07","title":"准备第一版简历并投递 3–5 个岗位","category":"求职","minutes":120,"description":"操作：写一页简历，列通讯录真实已完成功能、课程与 GitHub；说明研一在读、宜昌所在地、可到岗日期及每周出勤条件，投递 3–5 个匹配岗位。验收：保存简历和投递表，未实现的预约功能与未经测量的性能不写作成绩。","resourceURL":"","resourceLabel":""},
+        {"id":"w05-t08","title":"本周复盘与主动休息","category":"项目","minutes":60,"description":"操作：30 分钟复盘预约模型与投递反馈，选择下周必须解决的权限问题；30 分钟离屏活动。验收：记录 1 个设计问题、1 个求职问题和实际时长，保持总投入在 20 小时内。","resourceURL":"","resourceLabel":""}
+      ]
+    },
+    {
+      "id": "week-06",
+      "number": 6,
+      "title": "完善登录与预约权限",
+      "goal": "让用户只能操作自己的预约，管理员可管理设备，形成有权限边界的完整流程。",
+      "tasks": [
+        {"id":"w06-t01","title":"实现登录与会话","category":"Go","minutes":180,"description":"操作：在预约项目中使用成熟密码哈希库实现账号登录，生成随机会话令牌并设置过期时间；拒绝把密码以明文保存。验收：正确密码可登录，错误密码失败，过期或缺失会话返回 401；能说明哈希与加密的差别。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：Go Web 学习条目"},
+        {"id":"w06-t02","title":"实现角色与预约归属校验","category":"项目","minutes":180,"description":"操作：为管理设备接口检查管理员角色，为查询与取消预约检查 owner；以服务端会话身份确定用户，忽略客户端伪造身份。验收：学生不能管理设备，A 用户不能取消 B 用户预约，分别返回 403 或符合接口约定的 404。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：HTTP 中间件与 Web 开发"},
+        {"id":"w06-t03","title":"完成预约取消与状态变化","category":"项目","minutes":180,"description":"操作：实现取消预约、设备启停与可预约设备筛选；明确 active、cancelled 的状态变化和重复取消行为。验收：演示登录→查询设备→预约→查询个人记录→取消全流程，停用设备无法新建预约。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：Go 与 MySQL"},
+        {"id":"w06-t04","title":"用表驱动测试覆盖权限矩阵","category":"Go","minutes":180,"description":"操作：为未登录、本人、其他学生、管理员写 API 测试；增加恶意身份字段、空密码、会话过期等边界。验收：至少 8 个权限用例通过，go test ./... 与 go test -race ./... 通过，能解释每个 401 和 403。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：单元测试"},
+        {"id":"w06-t05","title":"HTTP Cookie、HTTPS 与 Linux curl","category":"计算机基础","minutes":150,"description":"操作：用 curl 的 cookie jar 登录和访问受保护接口，阅读 Set-Cookie；画出 HTTP 明文与 TLS 保护的范围，检查日志是否含敏感字段。验收：能解释 Cookie、会话、认证、授权四者关系，本机演示使用测试密码。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：HTTP 与网络编程"},
+        {"id":"w06-t06","title":"滑动窗口与字符串练习","category":"算法","minutes":150,"description":"操作：用 Go 实现最长无重复子串和固定窗口最大和，先用朴素方法再改进。验收：解释窗口何时扩展、收缩，覆盖重复字符、空输入和窗口超过数组长度。","resourceURL":"https://gobyexample-cn.github.io/","resourceLabel":"Go by Example：Map 与切片"},
+        {"id":"w06-t07","title":"更新项目证据并持续投递","category":"求职","minutes":120,"description":"操作：把真实已实现的登录、角色与测试写入简历，推送代码；跟进前次申请并新投 5 个匹配岗位，优先可接受研究生实习时长的岗位。验收：投递表记录入口、日期、反馈和下一步，准备 2 分钟项目介绍。","resourceURL":"","resourceLabel":""},
+        {"id":"w06-t08","title":"本周复盘与主动休息","category":"项目","minutes":60,"description":"操作：30 分钟从客户端到服务端讲清一次权限判断，复盘一个错误；30 分钟散步或伸展。验收：记录权限矩阵、实际时长与下周并发预约的待验证问题。","resourceURL":"","resourceLabel":""}
+      ]
+    },
+    {
+      "id": "week-07",
+      "number": 7,
+      "title": "解决并发预约与事务问题",
+      "goal": "能复现两个用户同时预约的问题，并用数据库事务保证同一设备时段不重复预订。",
+      "tasks": [
+        {"id":"w07-t01","title":"用 goroutine 复现竞争条件","category":"Go","minutes":180,"description":"操作：学习 goroutine、channel、WaitGroup 与 Mutex；写并发客户端同时预约同一设备时段，保存修复前结果。验收：能区分 Go 数据竞争与数据库业务冲突，测试可稳定启动至少 10 个并发请求。","resourceURL":"https://gobyexample-cn.github.io/","resourceLabel":"Go by Example：协程与同步"},
+        {"id":"w07-t02","title":"在事务中检查时段重叠","category":"数据库","minutes":180,"description":"操作：为预约开启事务，先锁定目标设备行，再按 start < existingEnd 且 end > existingStart 检查 active 预约；所有新预约遵循同一加锁顺序。验收：相邻时段允许预约，重叠时段被拒绝，失败路径执行回滚。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：MySQL 事务"},
+        {"id":"w07-t03","title":"补并发与取消预约的集成测试","category":"项目","minutes":180,"description":"操作：在独立测试库重建迁移，测试同设备同时间、不同设备、相邻时间及取消后的重新预约；并发创建和取消遵循同一事务约定。验收：同一时段并发请求只有一个成功，数据库实际记录与响应一致，测试不碰个人或正式数据。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：数据库与测试"},
+        {"id":"w07-t04","title":"理解隔离级别、锁与连接池","category":"数据库","minutes":180,"description":"操作：用两个数据库会话观察锁等待；记录事务时长，设置连接池上限与请求超时；写下一个死锁原因与统一加锁顺序。验收：能解释事务原子性、隔离性和连接池为何不能无限大，保存一段可复现的锁等待步骤。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：MySQL 与连接池"},
+        {"id":"w07-t05","title":"并发、并行、调度与 Linux 观测","category":"计算机基础","minutes":150,"description":"操作：使用 top、ps 与服务日志观察并发测试，比较 CPU 密集与等待数据库时的行为；画出 goroutine、线程、进程关系。验收：用自己的话解释并发与并行，说明 Go Mutex 不能代替跨进程数据库事务。","resourceURL":"https://missing-semester-cn.github.io/","resourceLabel":"缺失的一课：性能分析"},
+        {"id":"w07-t06","title":"二分边界与区间题","category":"算法","minutes":150,"description":"操作：完成 lower_bound 风格的查找边界与合并区间两题；把预约的左闭右开时段与区间边界联系起来。验收：覆盖相邻区间、包含区间、空输入，能解释你的循环不变量和复杂度。","resourceURL":"https://gobyexample-cn.github.io/","resourceLabel":"Go by Example：排序与切片"},
+        {"id":"w07-t07","title":"练习并发项目讲解并继续投递","category":"求职","minutes":120,"description":"操作：准备“问题如何复现、如何加锁、如何验证”的 3 分钟讲解；阅读岗位要求，投递 5 个匹配岗位并记录反馈。验收：简历只写测试过的并发行为，保留测试命令和结果，不把本机测量说成生产规模。","resourceURL":"","resourceLabel":""},
+        {"id":"w07-t08","title":"本周复盘与主动休息","category":"项目","minutes":60,"description":"操作：30 分钟整理事务流程图和一个最难排查的问题；30 分钟离屏活动。验收：记录当前预约一致性的条件、实际时长与尚未验证的边界。","resourceURL":"","resourceLabel":""}
+      ]
+    },
+    {
+      "id": "week-08",
+      "number": 8,
+      "title": "补齐测试，交付预约项目第一版",
+      "goal": "把可运行项目整理成别人能复现的交付物，形成真实的简历证据并保持投递。",
+      "tasks": [
+        {"id":"w08-t01","title":"审查预约流程与接口边界","category":"项目","minutes":180,"description":"操作：逐接口检查输入、身份、权限、事务、返回码；修复缺少的设备状态与时间边界校验，整理 API 表。验收：登录、预约、冲突、取消、管理员设备管理都有成功和失败的 curl 示例。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：Go Web 开发"},
+        {"id":"w08-t02","title":"完成分层测试与回归","category":"Go","minutes":180,"description":"操作：为纯业务函数写单元测试，用 httptest 测接口，在独立库测事务；执行 go test ./...、go test -race ./...、go vet ./...。验收：检查通过，覆盖一次之前修复的真实 bug，说明哪些行为仍需人工验证。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：测试与工具链"},
+        {"id":"w08-t03","title":"测量并发请求与定位瓶颈","category":"项目","minutes":180,"description":"操作：写小型 Go 请求脚本，对设备列表与预约分别测 1、10、30 并发，记录机器、数据量、成功数、错误数和耗时分位数。验收：保留脚本与原始结果，用日志解释一个慢请求，不把压测本身当作优化成绩。","resourceURL":"https://gobyexample-cn.github.io/","resourceLabel":"Go by Example：HTTP 客户端与同步"},
+        {"id":"w08-t04","title":"整理一键复现步骤和发布标记","category":"Git","minutes":180,"description":"操作：完善 README、配置示例、迁移、演示数据与测试步骤；用新目录 clone 并重建项目，确认秘密与二进制未入库，提交后打 v0.1.0 标签。验收：从空目录按 README 能完成登录与预约，有一段本机演示记录。","resourceURL":"https://missing-semester-cn.github.io/","resourceLabel":"缺失的一课：版本控制"},
+        {"id":"w08-t05","title":"Linux 日志定位与 TCP 连接状态","category":"Linux","minutes":150,"description":"操作：用 rg、tail、ss 筛选慢请求与连接，重现服务停止、数据库停止、端口占用三种故障；写故障定位表。验收：能按“客户端→服务→数据库”顺序定位，说明 LISTEN、ESTABLISHED 的含义。","resourceURL":"https://missing-semester-cn.github.io/","resourceLabel":"缺失的一课：调试与命令行工具"},
+        {"id":"w08-t06","title":"BFS 与 DFS 基础题","category":"算法","minutes":150,"description":"操作：完成二叉树层序遍历与网格连通块计数；分别说明队列与递归的用途，检查访问标记。验收：两道题通过空输入和多连通块用例，能估计最坏时间与空间。","resourceURL":"https://gobyexample-cn.github.io/","resourceLabel":"Go by Example：递归、切片与 Map"},
+        {"id":"w08-t07","title":"预约项目进入简历，投递与模拟面试","category":"求职","minutes":120,"description":"操作：将 v0.1.0 已完成功能与测试证据写入一页简历，投递 5 个岗位；录制 5 分钟自我介绍和项目讲解。验收：投递表持续更新，能回答为什么选 Go、为何用事务及自己独立改过哪里。","resourceURL":"","resourceLabel":""},
+        {"id":"w08-t08","title":"阶段复盘与主动休息","category":"项目","minutes":60,"description":"操作：30 分钟比较第 1 周与现在独立完成的能力，选出一个第 9 周要测量的缓存场景；30 分钟离屏活动。验收：记录已会、需复习、暂缓各 3 项，保持下阶段每周 20 小时。","resourceURL":"","resourceLabel":""}
+      ]
+    },
+    {
+      "id": "week-09",
+      "number": 9,
+      "title": "为设备列表加入可验证的缓存",
+      "goal": "在真实读取场景中学习 Redis、TTL 和失效策略，保留优化前后的可比较数据。",
+      "tasks": [
+        {"id":"w09-t01","title":"准备 Redis 并练习基本命令","category":"数据库","minutes":180,"description":"操作：在本机准备 Redis，练习 SET、GET、DEL、EXPIRE、TTL；用 Go 客户端写短程序，设置连接超时。验收：键能按时过期，Redis 停止时得到可诊断错误，配置与密码没有提交到 Git。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：Go 操作 Redis"},
+        {"id":"w09-t02","title":"实现设备列表旁路缓存","category":"项目","minutes":180,"description":"操作：只缓存设备列表，未命中查 MySQL 再写 Redis；设备修改后删除缓存，设置 TTL；Redis 故障时回退数据库。验收：首次和再次请求能区分命中，修改设备后列表更新，预约冲突仍由数据库事务保证。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：Redis 与 Go"},
+        {"id":"w09-t03","title":"测试缓存过期、失效与故障","category":"Go","minutes":180,"description":"操作：补缓存命中、过期、设备修改、Redis 不可用测试；解释穿透、击穿、雪崩各一个场景，只为已出现的问题选择措施。验收：缓存故障不阻止设备查询，测试能揭示一处错误的失效时机。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：Redis 与单元测试"},
+        {"id":"w09-t04","title":"测量缓存收益并记录限制","category":"项目","minutes":180,"description":"操作：使用第 8 周脚本在相同环境比较缓存关闭与开启，记录命中率、数据库查询次数、耗时和失败率；写一页结果。验收：结果可重跑，解释收益与失效风险，未见提升时如实保留结论并查原因。","resourceURL":"https://gobyexample-cn.github.io/","resourceLabel":"Go by Example：计时与 HTTP 客户端"},
+        {"id":"w09-t05","title":"内存、分页与 Linux 资源观测","category":"计算机基础","minutes":150,"description":"操作：使用 free、top、du 观察 Go、MySQL、Redis 的内存与磁盘，阅读虚拟内存、分页、缓存的基本概念；给数据库列表加合理分页。验收：能解释内存占用与磁盘空间不同，分页不会一次返回全部记录。","resourceURL":"https://missing-semester-cn.github.io/","resourceLabel":"缺失的一课：性能分析与工具"},
+        {"id":"w09-t06","title":"堆与 Top K 练习","category":"算法","minutes":150,"description":"操作：学习 container/heap 的接口，完成 Top K 高频元素；再写一道栈或队列旧题检查遗忘。验收：能解释为什么堆可把复杂度降到 O(n log k)，补齐 k=0 和 k 超界处理。","resourceURL":"https://gobyexample-cn.github.io/","resourceLabel":"Go by Example：接口与集合"},
+        {"id":"w09-t07","title":"复盘真实面试问题并继续投递","category":"求职","minutes":120,"description":"操作：新投 5 个岗位并跟进已有流程；把真实面试或自测中不熟悉的 Go、MySQL、网络问题写成问答卡，最多选 5 个补齐。验收：每张卡有自己的解释或可运行例子，简历缓存指标来自保存的测量记录。","resourceURL":"","resourceLabel":""},
+        {"id":"w09-t08","title":"本周复盘与主动休息","category":"项目","minutes":60,"description":"操作：30 分钟复盘缓存收益和一个一致性边界，确定容器化所需配置；30 分钟离屏活动。验收：记录实际时长、缓存限制与下周部署清单。","resourceURL":"","resourceLabel":""}
+      ]
+    },
+    {
+      "id": "week-10",
+      "number": 10,
+      "title": "用 Docker 在本机复现运行环境",
+      "goal": "把 Go、MySQL、Redis 的启动条件写进容器配置，让新环境能重现项目。",
+      "tasks": [
+        {"id":"w10-t01","title":"理解镜像、容器与多阶段构建","category":"Linux","minutes":180,"description":"操作：在 Ubuntu 本机使用 Docker，检查版本，编写 Go 多阶段 Dockerfile，使用非 root 用户运行；比较源码、编译产物与运行镜像。验收：docker build 后能启动 /health，能解释镜像、容器、端口映射各自含义。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：Docker 与 Go 部署条目"},
+        {"id":"w10-t02","title":"编写本机 Compose 服务配置","category":"项目","minutes":180,"description":"操作：配置 Go、MySQL、Redis 服务、数据卷、网络与健康检查，端口仅发布到 127.0.0.1；使用配置示例说明启动与迁移顺序。验收：新目录中按 README 能启动完整预约流程，容器内数据库地址使用服务名。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：Docker 部署"},
+        {"id":"w10-t03","title":"验证持久化、配置与重启行为","category":"数据库","minutes":180,"description":"操作：新增预约后重启应用与数据库容器，检查数据卷；模拟 MySQL 尚未准备、Redis 不可用与错误配置。验收：正常重启数据保留，故障日志能指出原因，明确删除数据卷会清空学习数据。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：部署与数据库"},
+        {"id":"w10-t04","title":"完善优雅停止和回归测试","category":"Go","minutes":180,"description":"操作：处理 SIGINT/SIGTERM，用 http.Server.Shutdown 等待请求结束并关闭连接；重新运行单测、竞态检测和预约并发测试。验收：停止服务不会留下未提交事务，保存测试命令与结果，容器停止日志可解释。","resourceURL":"https://gobyexample-cn.github.io/","resourceLabel":"Go by Example：信号与 HTTP 服务"},
+        {"id":"w10-t05","title":"Linux 容器日志、网络与文件权限","category":"Linux","minutes":150,"description":"操作：练习 docker logs、exec、inspect、compose ps，重现宿主机端口冲突、容器 DNS 错误、挂载目录不可写三个问题。验收：每类问题留下定位命令、根因和修复，不通过永久开放所有权限解决。","resourceURL":"https://missing-semester-cn.github.io/","resourceLabel":"缺失的一课：调试与命令行"},
+        {"id":"w10-t06","title":"动态规划入门","category":"算法","minutes":150,"description":"操作：完成爬楼梯与打家劫舍，先写状态定义、转移和初始化，再用 Go 实现。验收：能手算一个例子，覆盖最短输入，并解释为何可以减少空间。","resourceURL":"https://gobyexample-cn.github.io/","resourceLabel":"Go by Example：函数与切片"},
+        {"id":"w10-t07","title":"更新复现文档，跟进投递与到岗条件","category":"求职","minutes":120,"description":"操作：推送容器配置与复现记录，投递 5 个岗位；对进入面试的机会确认城市、每周出勤、实习期限、研究生课程安排及到岗日期。验收：投递表有下一步时间，项目介绍可解释容器网络与持久化。","resourceURL":"","resourceLabel":""},
+        {"id":"w10-t08","title":"本周复盘与主动休息","category":"项目","minutes":60,"description":"操作：30 分钟从新 clone 开始口述完整启动流程并标出易错步骤；30 分钟离屏活动。验收：留下 3 条排错经验、实际时长和下周模拟面试清单。","resourceURL":"","resourceLabel":""}
+      ]
+    },
+    {
+      "id": "week-11",
+      "number": 11,
+      "title": "集中排错与模拟面试",
+      "goal": "能独立定位常见后端故障，并把 Go、数据库、网络与项目经验讲成具体证据。",
+      "tasks": [
+        {"id":"w11-t01","title":"模拟三类线上形态故障","category":"项目","minutes":180,"description":"操作：在本机复现数据库慢查询、连接池耗尽与 Redis 停机；为每次记录现象、假设、检查命令、证据和修复。验收：提交 3 份短故障记录，每份能用步骤重新触发并验证恢复。","resourceURL":"https://missing-semester-cn.github.io/","resourceLabel":"缺失的一课：调试与性能分析"},
+        {"id":"w11-t02","title":"用 pprof 观察 Go 服务","category":"Go","minutes":180,"description":"操作：在单独回环调试端口启用 pprof，运行固定请求脚本并观察 CPU 或内存 profile，选择一个有证据的问题处理。验收：保留 profile 与结论，能说明 goroutine 泄漏的排查方向；没有瓶颈也如实记录。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：pprof 性能分析"},
+        {"id":"w11-t03","title":"整理 Go 高频问题并用代码验证","category":"Go","minutes":180,"description":"操作：复习 slice/map、interface、defer、error、channel、Mutex 与 context，各用一个短例子验证易错点。验收：随机抽 4 个问题，不看资料解释并运行示例，不把背诵答案当作理解。","resourceURL":"https://gobyexample-cn.github.io/","resourceLabel":"Go by Example 中文"},
+        {"id":"w11-t04","title":"用项目复习 MySQL 与缓存问题","category":"数据库","minutes":180,"description":"操作：围绕预约项目复习索引、EXPLAIN、事务、锁、隔离级别、连接池和缓存失效；对 2 个薄弱点做实验。验收：能用自己的表和查询回答问题，保存实验 SQL 与结果，区分事实和未验证推断。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：MySQL 与 Redis"},
+        {"id":"w11-t05","title":"复习 TCP、HTTP、进程与死锁","category":"计算机基础","minutes":150,"description":"操作：画 TCP 建连关闭、HTTP 请求响应和进程线程关系图；用 curl、ss、ps 验证可见部分，复习死锁成立条件。验收：能连续 5 分钟解释一次请求从客户端到数据库，说明哪部分仅是概念图。","resourceURL":"https://missing-semester-cn.github.io/","resourceLabel":"缺失的一课：调试与工具"},
+        {"id":"w11-t06","title":"限时算法与错题回练","category":"算法","minutes":150,"description":"操作：从前 10 周选 3 道错题，分别限时 30 分钟口述、编码和自测；剩余时间分析卡点。验收：每题有正确代码和复杂度，记录是思路、Go 语法还是边界造成失误。","resourceURL":"https://gobyexample-cn.github.io/","resourceLabel":"Go by Example：基础语法复查"},
+        {"id":"w11-t07","title":"完成一次模拟面试并继续投递","category":"求职","minutes":120,"description":"操作：做一次 40 分钟模拟面试并回听，覆盖自我介绍、项目、Go、SQL 和一道题；继续投递或跟进 5 个机会。验收：记录 3 个需修正的回答和下次练习日期，能如实说明 AI 辅助和个人独立完成的部分。","resourceURL":"","resourceLabel":""},
+        {"id":"w11-t08","title":"本周复盘与主动休息","category":"项目","minutes":60,"description":"操作：30 分钟把模拟面试反馈压缩成最后一周的 3 个重点；30 分钟离屏活动。验收：删除低价值重复学习，记录实际时长与最后一周交付清单。","resourceURL":"","resourceLabel":""}
+      ]
+    },
+    {
+      "id": "week-12",
+      "number": 12,
+      "title": "完成交付，形成持续投递节奏",
+      "goal": "从空环境复现项目，诚实展示能独立完成的工作，并根据反馈安排下一轮学习与求职。",
+      "tasks": [
+        {"id":"w12-t01","title":"从空目录复现整个项目","category":"项目","minutes":180,"description":"操作：新 clone 预约项目，按 README 创建配置、启动服务、执行迁移和测试，完成用户预约与管理员管理演示；修正所有文档缺口。验收：保留完整命令记录，一位同学能照文档复现，秘密和个人数据未入库。","resourceURL":"https://missing-semester-cn.github.io/","resourceLabel":"缺失的一课：版本控制与工具"},
+        {"id":"w12-t02","title":"整理测试证据并完成最后回归","category":"Go","minutes":180,"description":"操作：运行单测、竞态检测、数据库集成测试、并发预约和缓存故障验证；只修复阻碍演示或正确性的缺陷。验收：保存环境、命令和结果，记录仍存在的限制，所有新增修复有对应验证。","resourceURL":"https://liwenzhou.com/posts/go/golang-menu/","resourceLabel":"李文周：测试与并发"},
+        {"id":"w12-t03","title":"整理项目说明、演示与版本标签","category":"Git","minutes":180,"description":"操作：整理架构图、表结构、接口、权限、事务与缓存设计，录制 5 分钟演示，提交后打 v1.0.0 学习版本标签。验收：GitHub 首页能找到启动说明、演示和测试，不使用“生产级”或虚构用户量描述练习项目。","resourceURL":"https://missing-semester-cn.github.io/","resourceLabel":"缺失的一课：版本控制"},
+        {"id":"w12-t04","title":"打磨简历和项目面试表达","category":"求职","minutes":180,"description":"操作：把简历压到一页，逐条核验功能与指标；练习 2 分钟、5 分钟两个项目介绍，并回答事务、权限、缓存和排错追问。验收：每条项目描述都有代码或实验支撑，能明确说明 AI 生成示范与自己理解、修改、验证的部分。","resourceURL":"","resourceLabel":""},
+        {"id":"w12-t05","title":"完成 Linux 与网络综合排错练习","category":"Linux","minutes":150,"description":"操作：请同学或按自写脚本随机制造端口占用、错误环境变量、数据库不可达、文件权限错误中的两项；仅看现象独立排查。验收：用 curl、ss、ps、日志和权限检查定位，记录处理时间和依据，不靠盲目重启。","resourceURL":"https://missing-semester-cn.github.io/","resourceLabel":"缺失的一课：调试与命令行"},
+        {"id":"w12-t06","title":"算法阶段验收与复习计划","category":"算法","minutes":150,"description":"操作：随机选择数组/哈希、树、动态规划各一道已有题，限时重写；把失误按知识点归类并安排之后每周 3 题。验收：正确解释复杂度和边界，错题有具体复习日期，记录实际完成情况。","resourceURL":"https://gobyexample-cn.github.io/","resourceLabel":"Go by Example：Go 语法复查"},
+        {"id":"w12-t07","title":"投递与下一阶段行动表","category":"求职","minutes":120,"description":"操作：投递或跟进 5 个匹配岗位，汇总 8 周投递反馈；安排未来 4 周每周岗位筛选、面试复盘和项目维护时间，确认北上广深杭到岗条件。验收：投递表状态清晰，下阶段有日程；未拿到面试时根据岗位差距调整简历和技能重点。","resourceURL":"","resourceLabel":""},
+        {"id":"w12-t08","title":"12 周总结与主动休息","category":"项目","minutes":60,"description":"操作：30 分钟回顾总投入、完成任务、独立改动与仍需帮助的内容，给下一阶段选 3 个目标；30 分钟离屏休息。验收：留下可验证的成长记录，剩余任务按优先级重新安排，不把计划结束等同于掌握全部内容。","resourceURL":"","resourceLabel":""}
+      ]
+    }
+  ]
+}
