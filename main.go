@@ -29,13 +29,43 @@ import (
 var content embed.FS
 
 type Task struct {
-	ID            string `json:"id"`
-	Title         string `json:"title"`
-	Category      string `json:"category"`
-	Minutes       int    `json:"minutes"`
-	Description   string `json:"description"`
-	ResourceURL   string `json:"resourceURL"`
-	ResourceLabel string `json:"resourceLabel"`
+	ID            string       `json:"id"`
+	Title         string       `json:"title"`
+	Category      string       `json:"category"`
+	Minutes       int          `json:"minutes"`
+	Description   string       `json:"description"`
+	ResourceURL   string       `json:"resourceURL"`
+	ResourceLabel string       `json:"resourceLabel"`
+	Details       *TaskDetails `json:"details,omitempty"`
+}
+
+type StudyStep struct {
+	Title    string   `json:"title"`
+	Minutes  int      `json:"minutes"`
+	Actions  []string `json:"actions"`
+	Commands []string `json:"commands"`
+}
+
+type StudyPitfall struct {
+	Problem  string `json:"problem"`
+	Solution string `json:"solution"`
+}
+
+type StudyResource struct {
+	Label string `json:"label"`
+	URL   string `json:"url"`
+}
+
+type TaskDetails struct {
+	Objective     string          `json:"objective"`
+	Prerequisites []string        `json:"prerequisites"`
+	Steps         []StudyStep     `json:"steps"`
+	Acceptance    []string        `json:"acceptance"`
+	Deliverables  []string        `json:"deliverables"`
+	Pitfalls      []StudyPitfall  `json:"pitfalls"`
+	Reflection    []string        `json:"reflection"`
+	Resources     []StudyResource `json:"resources"`
+	Extension     []string        `json:"extension"`
 }
 
 type Week struct {

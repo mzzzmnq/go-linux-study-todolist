@@ -4,7 +4,20 @@
 
 ## 1. 先认目录，再认启动入口
 
-在 Ubuntu 的 `~/projects/go-linux-study-todolist` 执行 `pwd` 和 `ls`。Windows 对应的展示目录是 `D:\Codex_project\go-linux-study-todolist`。
+本机源码位于 Ubuntu 的 `~/projects/go-linux-study-todolist`，展开后是 `/home/mzzzmnq/projects/go-linux-study-todolist`。`~` 随 Linux 用户变化；换电脑时继续使用 `~/projects/...`，不用照搬用户名。工具版本、Windows 快捷脚本与目录对照见 [本机环境说明](LOCAL_SETUP.md)。
+
+在 Windows PowerShell 中执行 `wsl -d Ubuntu` 进入 Ubuntu，或用本机的 `D:\Projects\Open-Go-Linux-VSCode.cmd` 打开 VS Code。VS Code 左下角应显示 `WSL: Ubuntu`；以下命令在 Ubuntu 终端执行：
+
+```bash
+whoami
+cd ~/projects/go-linux-study-todolist
+pwd
+ls
+```
+
+本机 `whoami` 应输出 `mzzzmnq`，`pwd` 应输出上述完整源码路径。Windows 文件资源管理器可通过 `\\wsl.localhost\Ubuntu\home\mzzzmnq\projects\go-linux-study-todolist` 查看同一份文件。
+
+区分学习工具和练习项目：TodoList 放在 `~/projects/go-linux-study-todolist`；第 1 周自行编写的通讯录放在 `~/projects/contacts`，后续预约项目放在 `~/projects/lab-booking`。它们是并列目录，不在 TodoList 的仓库里执行 `go mod init contacts`。
 
 | 文件或目录 | 负责什么 |
 | --- | --- |
@@ -111,9 +124,10 @@ curl -i -X PUT http://127.0.0.1:8787/api/state \
 
 这里有两个不同的问题：`Mutex` 避免同一 Go 进程里多个写请求同时修改存储；`revision` 避免两个浏览器窗口先后发送旧快照时互相覆盖。临时文件替换减少写到一半留下不完整 JSON 的风险。只有文件保存成功，程序才更新内存中的状态并返回成功。
 
-默认 `data/` 相对启动工作目录。需要固定位置时设置 `STUDY_DATA_DIR`。不要在服务运行时直接编辑 `state.json`，因为内存快照与磁盘内容可能不一致。查看文件可以使用：
+默认 `data/` 相对启动工作目录。按第 1 节进入本机 TodoList 目录启动时，数据位于 `/home/mzzzmnq/projects/go-linux-study-todolist/data/state.json`。需要固定位置时设置 `STUDY_DATA_DIR`。不要在服务运行时直接编辑 `state.json`，因为内存快照与磁盘内容可能不一致。先确认仍在 TodoList 目录，再查看文件：
 
 ```bash
+cd ~/projects/go-linux-study-todolist
 cat data/state.json
 ```
 

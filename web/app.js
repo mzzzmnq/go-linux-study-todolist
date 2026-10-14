@@ -4,6 +4,7 @@
   const $ = (id) => document.getElementById(id);
   const categories = ['Go', 'Linux', 'Git', '数据库', '项目', '算法', '求职', '计算机基础'];
   const expanded = new Set();
+  const expandedGuides = new Set();
   const drafts = new Map();
   let plan = null;
   let state = null;
@@ -401,8 +402,85 @@
       actions.append(remove);
     }
     row.append(check, main, actions); item.append(row);
+    if (task.details) item.append(renderStudyGuide(task));
     if (expanded.has(task.id)) item.append(renderEditor(task));
     return item;
+  }
+
+  function renderStudyGuide(task) {
+    const guide = task.details;
+    const details = node('details', 'study-guide');
+    details.open = expandedGuides.has(task.id);
+    details.addEventListener('toggle', () => {
+      if (details.open) expandedGuides.add(task.id);
+      else expandedGuides.delete(task.id);
+    });
+    const summary = node('summary', 'study-guide-summary');
+    summary.dataset.focusKey = `guide-${task.id}`;
+    summary.append(node('span', '', '查看详细计划'), node('span', 'guide-step-count', `${guide.steps.length} 个步骤 · ${duration(task.minutes)}`), icon('arrow'));
+    details.append(summary);
+    const body = node('div', 'study-guide-body');
+    body.append(node('p', 'guide-objective', guide.objective));
+    function addList(title, values, ordered = false) {
+      if (!values || !values.length) return;
+      const section = node('section', 'guide-section');
+      section.append(node('h4', '', title));
+      const list = node(ordered ? 'ol' : 'ul', 'guide-list');
+      values.forEach((value) => list.append(node('li', '', value)));
+      section.append(list); body.append(section);
+    }
+    addList('开始前确认', guide.prerequisites);
+    const steps = node('section', 'guide-section');
+    steps.append(node('h4', '', '按步骤完成'));
+    if (guide.steps.some((step) => step.commands && step.commands.some((command) => /<[^>]+>/.test(command)))) {
+      steps.append(node('p', 'guide-reference-hint', '命令中的 <…> 是待填写内容：先按步骤确认版本、文件名或测试值，再替换后执行。'));
+    }
+    const stepList = node('ol', 'guide-steps');
+    guide.steps.forEach((step, index) => {
+      const item = node('li', 'guide-step');
+      const heading = node('div', 'guide-step-heading');
+      heading.append(node('h5', '', `${index + 1}. ${step.title}`), node('span', 'guide-step-time', duration(step.minutes)));
+      item.append(heading);
+      const actions = node('ul', 'guide-list');
+      step.actions.forEach((action) => actions.append(node('li', '', action)));
+      item.append(actions);
+      if (step.commands && step.commands.length) {
+        const pre = node('pre', 'guide-commands');
+        pre.append(node('code', '', step.commands.join('\n'))); item.append(pre);
+      }
+      stepList.append(item);
+    });
+    steps.append(stepList); body.append(steps);
+    addList('完成后逐项验收', guide.acceptance);
+    addList('保留这些学习产物', guide.deliverables);
+    if (guide.pitfalls && guide.pitfalls.length) {
+      const section = node('section', 'guide-section guide-pitfalls');
+      section.append(node('h4', '', '遇到问题先这样检查'));
+      guide.pitfalls.forEach((pitfall) => {
+        const item = node('div', 'guide-pitfall');
+        item.append(node('h5', '', pitfall.problem), node('p', '', pitfall.solution)); section.append(item);
+      });
+      body.append(section);
+    }
+    addList('写进笔记的复盘问题', guide.reflection);
+    if (guide.resources && guide.resources.length) {
+      const section = node('section', 'guide-section');
+      section.append(node('h4', '', '查证与参考'));
+      section.append(node('p', 'guide-reference-hint', '先用任务卡片上的中文资料学习；官方页面用于核对当前命令和 API，可以配合浏览器翻译，不必全文通读。'));
+      const links = node('ul', 'guide-list');
+      guide.resources.forEach((resource) => {
+        const href = safeResource(resource.url);
+        if (!href) return;
+        const link = node('a', 'guide-resource', resource.label);
+        link.href = href; link.target = '_blank'; link.rel = 'noopener noreferrer';
+        const item = node('li'); item.append(link); links.append(item);
+      });
+      section.append(links); body.append(section);
+    }
+    addList('可选延伸：从已有预算中调配时间', guide.extension);
+    body.append(node('p', 'guide-finish-hint', '完成验收后再勾选任务；用“笔记与用时”记录实际投入。步骤时间是安排建议，可以按自己的进度调整。'));
+    details.append(body);
+    return details;
   }
 
   function renderEditor(task) {
@@ -441,7 +519,7 @@
     const matching = tasks.filter((task) => {
       const progress = getProgress(task.id);
       const matchesStatus = filter === 'all' || (filter === 'done' ? progress.done : !progress.done);
-      const matchesQuery = !query || `${task.title} ${task.category} ${task.description || ''} ${progress.notes}`.toLocaleLowerCase().includes(query.toLocaleLowerCase());
+      const matchesQuery = !query || `${task.title} ${task.category} ${task.description || ''} ${task.details ? JSON.stringify(task.details) : ''} ${progress.notes}`.toLocaleLowerCase().includes(query.toLocaleLowerCase());
       return matchesStatus && matchesQuery;
     });
     const fragment = document.createDocumentFragment(); matching.forEach((task) => fragment.append(renderTask(task))); $('taskList').replaceChildren(fragment);
@@ -485,9 +563,17 @@
   function scrollBehavior() { return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'; }
 
   function openTask(id) {
-    filter = 'all'; query = ''; $('searchInput').value = ''; expanded.add(id); getDraft(id); renderTasks();
+    filter = 'all'; query = ''; $('searchInput').value = '';
+    const task = tasksFor(activeWeek()).find((item) => item.id === id);
+    if (task && task.details) expandedGuides.add(id);
+    else { expanded.add(id); getDraft(id); }
+    renderTasks();
     const card = [...$('taskList').children].find((item) => item.dataset.taskId === id);
-    if (card) { card.scrollIntoView({ behavior: scrollBehavior(), block: 'center' }); card.querySelector('.details-button').focus({ preventScroll: true }); }
+    if (card) {
+      card.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
+      const target = card.querySelector('.study-guide-summary') || card.querySelector('.details-button');
+      if (target) target.focus({ preventScroll: true });
+    }
   }
 
   async function load() {

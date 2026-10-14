@@ -11,4 +11,35 @@
 .drawer-close{display:none;position:absolute;top:9px;right:9px;color:#cbdacb}.drawer-close:hover{background:#2e5147}
 @media(max-width:800px){.drawer-close{display:flex}}
 @media(max-width:620px){.task-title{font-size:14px}.task-description{font-size:12px;line-height:1.85}.task-meta,.resource-link{font-size:10px}.category-chip{font-size:9px}.custom-chip{font-size:8px}.task-actions{margin-top:-4px}.details-button{font-size:11px;padding:7px 0;min-height:32px}.delete-button{width:32px;height:32px;align-items:center;justify-content:center}.task-editor .field-label{font-size:11px}.task-editor .form-input,.form-input,.search-field input{font-size:16px}.task-editor .form-input{min-height:42px}.task-editor .record-hint{font-size:9px}.editor-actions .button{font-size:11px;min-height:36px}.draft-status{font-size:10px}.field-label{font-size:12px}.form-input::placeholder{font-size:12px}.search-field input::placeholder{font-size:11px}.button{min-height:40px}}
+.study-guide{margin:0 24px 18px 58px;border-top:1px solid #e4e9df;min-width:0}
+.study-guide-summary{display:flex;align-items:center;gap:12px;padding:14px 0 0;cursor:pointer;list-style:none;font-size:12px;font-weight:600;color:#426038;min-height:40px}
+.study-guide-summary::-webkit-details-marker{display:none}
+.study-guide-summary:focus-visible{outline:2px solid #607c48;outline-offset:4px;border-radius:4px}
+.study-guide-summary svg{width:16px;height:16px;stroke:currentColor;stroke-width:1.5;margin-left:auto;transition:transform .15s}
+.study-guide[open]>.study-guide-summary svg{transform:rotate(180deg)}
+.guide-step-count{color:#829079;font-size:10px;font-weight:400}
+.study-guide-body{padding:18px 0 2px;font-size:13px;line-height:1.85;color:#465443;overflow-wrap:anywhere}
+.guide-objective{padding:12px 16px;background:#f1f5ec;border-radius:8px;color:#3b5632;margin:0 0 20px}
+.guide-section{margin:20px 0}
+.guide-section h4{font-size:13px;color:#31452b;margin:0 0 9px}
+.guide-list{padding-left:22px;margin:0}
+.guide-list li{margin:5px 0}
+.guide-steps{list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.guide-step{background:#fafbf8;border:1px solid #e7ecdf;border-radius:9px;padding:15px 17px;min-width:0}
+.guide-step-heading{display:flex;gap:12px;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.guide-step-heading h5{font-size:13px;margin:0;color:#3e5436;line-height:1.7}
+.guide-step-time{flex-shrink:0;font-size:10px;color:#76866a}
+.guide-commands{background:#203026;color:#e5eddf;padding:12px 14px;border-radius:6px;margin:12px 0 0;max-width:100%;overflow-x:auto;white-space:pre;overflow-wrap:normal;line-height:1.75;font-size:12px}
+.guide-commands code{font-family:Consolas,'Liberation Mono',monospace}
+.guide-pitfall{padding:10px 14px;border-left:3px solid #d7bc81;margin:10px 0;background:#faf7ef}
+.guide-pitfall h5{font-size:12px;margin:0 0 4px;color:#655332}
+.guide-pitfall p{margin:0}
+.guide-resource{color:#49713b;text-decoration:underline;text-underline-offset:3px}
+.guide-reference-hint{font-size:11px;color:#7b8971;margin:0 0 8px}
+.guide-finish-hint{color:#7b8971;font-size:11px;border-top:1px solid #e5eadd;padding-top:12px;margin:18px 0 0}
+.plan-reading-hint{font-size:12px;line-height:1.8;color:#76876b;margin:12px 0 0}
+.week-rhythm{margin-top:18px;padding:12px 16px;background:#f5f7f1;border:1px solid #e4eadd;border-radius:9px;color:#536448;font-size:12px;line-height:1.85}
+.week-rhythm>summary{cursor:pointer;font-weight:600}
+.week-rhythm-body p{margin:12px 0 0}.week-rhythm-body ul{margin:10px 0;padding-left:22px}.week-rhythm-body li{margin:5px 0}
+@media(max-width:620px){.study-guide{margin:0 14px 15px 43px}.study-guide-summary{font-size:12px;gap:8px;flex-wrap:wrap}.guide-step-count{font-size:10px}.study-guide-body{font-size:12px}.guide-step{padding:12px}.guide-step-heading{gap:8px;flex-wrap:wrap}.guide-section h4,.guide-step-heading h5{font-size:12px}.guide-objective{padding:11px 12px}.guide-commands{font-size:11px;padding:10px}.plan-reading-hint{font-size:11px}.guide-list{padding-left:18px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}

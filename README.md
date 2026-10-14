@@ -6,13 +6,25 @@
 
 每周有 8 个任务，预计共 1200 分钟；12 周共 96 个任务、240 小时。每周的 20 小时包含 30 分钟复盘和 30 分钟主动休息。建议按 5 天每天 3 小时、周末共 5 小时分配，也可以按课程安排调整。任务说明均包含具体操作和验收条件。新增自定义任务时，请从既有任务中挪出时间，避免超过每周预算。
 
+每项固定任务可展开“详细计划”：学习目标与前置条件、按分钟拆分的操作步骤、终端命令、逐项验收、需要保留的学习产物、常见问题排查、复盘问题和参考资料。可选延伸从已有预算中调配时间，不额外增加必做任务。第一周从验证本机环境和自己编写 Hello World 开始，后续逐步扩展通讯录与预约项目。
+
+步骤用于安排练习顺序，完成状态和笔记仍按原有任务保存，因此已有勾选、笔记、用时及 JSON 备份可继续使用。搜索也会匹配展开内容中的概念与命令。完整步骤的文字版见 [详细学习计划](docs/STUDY_PLAN.md)。
+
 ![学习路线运行截图](docs/preview.jpg)
 
 ## 运行起来
 
 本工具使用 Go 标准库提供后端，把 HTML、CSS、JavaScript 和课程 JSON 通过 `embed` 打包。运行它需要 Go，不需要 npm，也不需要外部数据库。课程里的 MySQL、Redis 和 Docker 用于你之后编写的通讯录或预约项目，与这个 TodoList 的启动无关。
 
-源码在 Windows 中的展示目录是 `D:\Codex_project\go-linux-study-todolist`；建议在 Ubuntu 中使用 `~/projects/go-linux-study-todolist`。项目的 `go.mod` 声明 Go 1.22，使用当前安装的兼容 Go 版本即可。先在终端确认环境：
+源码统一放在 Ubuntu 的 `~/projects/go-linux-study-todolist`。`~` 表示当前 Linux 用户的主目录，不同电脑的用户名可以不同。本机 WSL 发行版名为 `Ubuntu`，日常用户为 `mzzzmnq`，该目录实际是 `/home/mzzzmnq/projects/go-linux-study-todolist`。本机已配置的工具、目录和快捷入口见 [本机环境说明](docs/LOCAL_SETUP.md)。项目的 `go.mod` 声明 Go 1.22，使用当前安装的兼容 Go 版本即可。
+
+以下 `bash` 命令在 Ubuntu 终端中执行；如果当前打开的是 Windows PowerShell，先进入 Ubuntu：
+
+```powershell
+wsl -d Ubuntu
+```
+
+再确认环境：
 
 ```bash
 go version
@@ -38,7 +50,13 @@ cd go-linux-study-todolist
 go run .
 ```
 
-Windows 本机安装了 Go 且 `go version` 可执行时，也可以在展示目录双击 `start-windows.cmd` 启动。窗口保持打开，再访问同一个浏览器地址；按 `Ctrl+C` 停止。
+本机可在 Windows 双击 `D:\Projects\Start-Go-Linux-Study.cmd` 启动 Ubuntu 中的服务，或双击 `D:\Projects\Open-Go-Linux-VSCode.cmd` 用 VS Code 打开同一份 Linux 源码。VS Code 左下角应显示 `WSL: Ubuntu`，打开的终端应使用 `mzzzmnq` 用户。
+
+Windows 文件资源管理器可通过 `\\wsl.localhost\Ubuntu\home\mzzzmnq\projects\go-linux-study-todolist` 查看源码。本机日常使用的是这份 WSL 源码，`D:\Projects` 中的两个脚本只是入口。换电脑时，按实际发行版和用户调整快捷脚本；Ubuntu 内的 `~/projects/...` 命令可保持一致。
+
+如果另行把仓库克隆到 Windows 文件夹，并且 Windows 本机安装了 Go，也可以在那份仓库内双击 `start-windows.cmd`。它运行 Windows 版本的 Go，并默认使用那份仓库的 `data/`；与 WSL 中的学习数据分别保存。
+
+第 1 周的通讯录练习放在 `~/projects/contacts`，与 TodoList 仓库并列。后续的设备预约项目放在 `~/projects/lab-booking`。这两个是学习过程中自行创建的项目；目录约定和第一步命令见 [本机环境说明](docs/LOCAL_SETUP.md)。
 
 ## 使用与保存
 
@@ -46,7 +64,7 @@ Windows 本机安装了 Go 且 `go version` 可执行时，也可以在展示目
 
 勾选、笔记、实际分钟、自定义任务和开始日期保存到 Go 服务管理的 JSON 文件中。关闭浏览器后记录仍在；服务停止再重启后也能读取。关闭终端会停止服务，此时网页无法继续保存。它不依靠浏览器缓存保存进度。
 
-使用页面的 JSON 导出功能备份，导入备份可恢复记录。导入会替换当前记录，操作前先导出当前进度。多台电脑之间不会自动同步，可以用导出、传输、导入的方式迁移。备份可能包含个人笔记，按自己的需要保管。
+使用页面的 JSON 导出功能备份，导入备份可恢复记录。导入会替换当前记录，操作前先导出当前进度。多台电脑之间不会自动同步：Git 用于同步源码，个人进度需要通过 JSON 导出、传输、导入迁移。两台电脑都使用 `~/projects/go-linux-study-todolist` 即可，不要求 `/home/用户名` 或 Windows 盘符完全相同。备份可能包含个人笔记，按自己的需要保管。
 
 默认数据位置是**启动时工作目录**下的 `data/state.json`。无论源码还是编译后的程序，换一个目录启动都可能得到新的数据目录；终端会打印实际保存路径。`data/` 和生成的二进制已加入 `.gitignore`。
 
