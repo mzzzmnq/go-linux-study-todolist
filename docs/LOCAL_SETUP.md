@@ -1,21 +1,21 @@
 # 本机环境与学习目录
 
-核实日期：2026-10-14。本文覆盖归档材料中的旧机器路径；按现有环境使用，不需要更改 Linux 用户名或搬动学习数据。
+核实日期：2026-10-15。本文记录当前这台电脑的实际环境；其他电脑的发行版、用户名与安装路径应分别核实。
 
 ## 当前环境
 
-- WSL 发行版名：`Ubuntu`；系统：Ubuntu 22.04.4 LTS；Linux 用户：`mzzzmnq`。
-- WSL 物理存储：`D:\WSL\Ubuntu`。这是发行版存储位置，日常编辑源码使用下面的 Linux 路径。
-- 学习看板源码：`~/projects/go-linux-study-todolist`，绝对路径为 `/home/mzzzmnq/projects/go-linux-study-todolist`。
-- Go 1.27.2：`/usr/local/go/bin/go`；Git 2.34.1；gopls 0.23.0 和 Delve 1.27.2 位于 `~/go/bin`。
-- Windows VS Code：`D:\Microsoft VS Code`。官方 WSL 和中文插件安装在 Windows，Go 插件安装在 WSL 环境。
+- WSL 发行版名：`Ubuntu-24.04`；系统：Ubuntu 24.04.5 LTS；Linux 用户：`caolingyun`。WSL 版本为 2，PID 1 为 systemd。
+- WSL 物理存储：`D:\WSL\Ubuntu-24.04`。这是发行版存储位置，日常编辑源码使用下面的 Linux 路径。
+- 学习看板源码：`~/projects/go-linux-study-todolist`，绝对路径为 `/home/caolingyun/projects/go-linux-study-todolist`。
+- Go 1.27.2：命令入口为 `~/.local/bin/go`，实际文件为 `~/.local/share/go/go1.27.2/go/bin/go`；Git 2.43.0。`gopls` 和 `dlv` 当前未在 Linux PATH 中检出。
+- Windows VS Code：`D:\Microsoft VS Code`，已检出中文扩展；默认扩展目录中未检出 WSL 扩展，Ubuntu 的默认 VS Code Server 扩展目录中也未检出 Go 扩展。配置这些扩展前，可使用已安装的 `nano` 完成终端练习。
 
 ## 进入 Ubuntu 并启动看板
 
 在 Windows PowerShell 中执行：
 
 ```powershell
-wsl -d Ubuntu
+wsl -d Ubuntu-24.04 -u caolingyun
 ```
 
 进入 Ubuntu 后，用 `whoami` 确认用户，用 `pwd` 查看当前目录，再进入项目：
@@ -31,7 +31,7 @@ go run .
 
 浏览器打开 `http://127.0.0.1:8787`。保持运行服务的终端打开；在自己终端前台运行的服务可按 `Ctrl+C` 停止。若页面已可访问或端口已有服务，先确认现有服务，不要重复启动。
 
-也可以在 Windows 双击 `D:\Projects\Start-Go-Linux-Study.cmd` 启动，或双击 `D:\Projects\Open-Go-Linux-VSCode.cmd` 用 VS Code 打开 WSL 项目。编辑前确认 VS Code 左下角显示 WSL 环境。
+也可以在 Windows 双击 `D:\Codex_project\linux-setup\Start-Study-TodoList.cmd` 启动 Ubuntu 中的服务。配置好 VS Code 的 WSL 扩展后，可从 Ubuntu 项目目录执行 `code .`；编辑前确认 VS Code 左下角显示 `WSL: Ubuntu-24.04`。
 
 如果另行克隆到 Windows 文件夹，项目内的 `start-windows.cmd` 用于原生 Windows Go 启动，会使用那份仓库内的 `data/`。日常学习使用上述 WSL 入口，以免把两份进度混淆。
 
@@ -51,13 +51,15 @@ go mod init contacts
 
 ## 学习数据与同步
 
-在看板源码目录启动时，进度保存到 `/home/mzzzmnq/projects/go-linux-study-todolist/data/state.json`。默认 `data` 相对启动工作目录，因此换目录启动可能生成另一份数据；以服务日志中的保存路径为准。不要在服务运行时直接编辑此文件。
+在看板源码目录启动时，进度保存到 `/home/caolingyun/projects/go-linux-study-todolist/data/state.json`。默认 `data` 相对启动工作目录，因此换目录启动可能生成另一份数据；以服务日志中的保存路径为准。不要在服务运行时直接编辑此文件。
 
 Git 同步源码，不包含个人进度。跨机器迁移时，在页面导出 JSON，传输备份后在目标机器导入；导入会替换目标机器的当前记录，导入前先导出一份备份。路径说明更新不会自动同步或搬迁数据。
 
-## 单份源码与工位电脑
+## 本机两份源码与跨电脑同步
 
-本机只保留 `~/projects/go-linux-study-todolist` 这一份 TodoList 源码。`D:\Projects` 中的两个 `.cmd` 文件是启动入口；Windows 文件资源管理器通过 `\\wsl.localhost\Ubuntu\home\mzzzmnq\projects\go-linux-study-todolist` 访问的也是同一份 Linux 文件。生成课程时使用的 `.go-linux-plan-update`、`.go-linux-plan-preview`、`.go-linux-doc-update` 是临时目录，不作为开发入口。
+本机有两份 Git 工作目录：Windows 的 `D:\Codex_project\go-linux-study-todolist` 和 Ubuntu 的 `~/projects/go-linux-study-todolist`。日常学习使用 Ubuntu 目录。Windows 文件资源管理器通过 `\\wsl.localhost\Ubuntu-24.04\home\caolingyun\projects\go-linux-study-todolist` 访问的是同一份 Linux 文件；它与 D 盘的 Windows 源码目录不是同一个目录。
+
+两份源码通过 Git 同步，修改一份不会自动更新另一份；各自的 `data/` 也独立保存。更新前检查 `git status --short`，提交并推送需要同步的代码后，再在另一份目录执行 `git pull --ff-only origin main`。已有未提交改动应先处理，避免两份目录各自修改后混淆。Windows 启动脚本位于 `D:\Codex_project\linux-setup`，其中的 WSL 启动脚本使用 Ubuntu 的学习数据。
 
 工位电脑首次使用时，在那台电脑的 Ubuntu 终端执行一次：
 
@@ -66,7 +68,7 @@ mkdir -p ~/projects
 cd ~/projects
 git clone https://github.com/mzzzmnq/go-linux-study-todolist.git
 cd go-linux-study-todolist
-code .
+go run .
 ```
 
 以后每次开始工作，先保存本机尚未提交的改动，再在项目目录拉取：

@@ -16,12 +16,12 @@
 
 本工具使用 Go 标准库提供后端，把 HTML、CSS、JavaScript 和课程 JSON 通过 `embed` 打包。运行它需要 Go，不需要 npm，也不需要外部数据库。课程里的 MySQL、Redis 和 Docker 用于你之后编写的通讯录或预约项目，与这个 TodoList 的启动无关。
 
-源码统一放在 Ubuntu 的 `~/projects/go-linux-study-todolist`。`~` 表示当前 Linux 用户的主目录，不同电脑的用户名可以不同。本机 WSL 发行版名为 `Ubuntu`，日常用户为 `mzzzmnq`，该目录实际是 `/home/mzzzmnq/projects/go-linux-study-todolist`。本机已配置的工具、目录和快捷入口见 [本机环境说明](docs/LOCAL_SETUP.md)。项目的 `go.mod` 声明 Go 1.22，使用当前安装的兼容 Go 版本即可。
+日常学习使用 Ubuntu 的 `~/projects/go-linux-study-todolist`。`~` 表示当前 Linux 用户的主目录，不同电脑的用户名可以不同。本机 WSL 发行版名为 `Ubuntu-24.04`，日常用户为 `caolingyun`，该目录实际是 `/home/caolingyun/projects/go-linux-study-todolist`。本机已配置的工具、目录和快捷入口见 [本机环境说明](docs/LOCAL_SETUP.md)。项目的 `go.mod` 声明 Go 1.22，使用当前安装的兼容 Go 版本即可。
 
 以下 `bash` 命令在 Ubuntu 终端中执行；如果当前打开的是 Windows PowerShell，先进入 Ubuntu：
 
 ```powershell
-wsl -d Ubuntu
+wsl -d Ubuntu-24.04 -u caolingyun
 ```
 
 再确认环境：
@@ -50,9 +50,9 @@ cd go-linux-study-todolist
 go run .
 ```
 
-本机可在 Windows 双击 `D:\Projects\Start-Go-Linux-Study.cmd` 启动 Ubuntu 中的服务，或双击 `D:\Projects\Open-Go-Linux-VSCode.cmd` 用 VS Code 打开同一份 Linux 源码。VS Code 左下角应显示 `WSL: Ubuntu`，打开的终端应使用 `mzzzmnq` 用户。
+本机可在 Windows 双击 `D:\Codex_project\linux-setup\Start-Study-TodoList.cmd` 启动 Ubuntu 中的服务。配置好 VS Code 的 WSL 扩展后，可在 Ubuntu 项目目录执行 `code .`；左下角应显示 `WSL: Ubuntu-24.04`，终端使用 `caolingyun` 用户。扩展尚未配置时可先用 `nano` 编辑。
 
-Windows 文件资源管理器可通过 `\\wsl.localhost\Ubuntu\home\mzzzmnq\projects\go-linux-study-todolist` 查看源码。本机日常使用的是这份 WSL 源码，`D:\Projects` 中的两个脚本只是入口。换电脑时，按实际发行版和用户调整快捷脚本；Ubuntu 内的 `~/projects/...` 命令可保持一致。
+Windows 文件资源管理器可通过 `\\wsl.localhost\Ubuntu-24.04\home\caolingyun\projects\go-linux-study-todolist` 查看 Linux 源码。本机还保留 `D:\Codex_project\go-linux-study-todolist` 这份 Windows Git 工作目录，两份源码通过 Git 同步、学习数据分别保存；日常练习使用 Ubuntu 目录。换电脑时，按实际发行版和用户调整快捷脚本；Ubuntu 内的 `~/projects/...` 命令可保持一致。
 
 如果另行把仓库克隆到 Windows 文件夹，并且 Windows 本机安装了 Go，也可以在那份仓库内双击 `start-windows.cmd`。它运行 Windows 版本的 Go，并默认使用那份仓库的 `data/`；与 WSL 中的学习数据分别保存。
 

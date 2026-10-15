@@ -17,7 +17,7 @@
           "details": {
             "objective": "验证已经安装好的 WSL Ubuntu、Go、Git 与 VSCode 连接，分清 Windows/Ubuntu 两套路径，亲手写出并运行 HelloWorld；环境检查只读，不重装工具，也不改 TodoList 源码或 data。",
             "prerequisites": [
-              "已知 Ubuntu 22.04 的用户名为 mzzzmnq；Go 1.27.2、Git、VSCode 的 WSL/Go 扩展及 gopls/dlv 已安装。",
+              "本机 Ubuntu 24.04.5 的用户名为 caolingyun；Go 1.27.2、Git 和 nano 已核实可用。VS Code 的 WSL/Go 扩展及 gopls/dlv 按需另行核验和配置。",
               "TodoList 位于 ~/projects/go-linux-study-todolist；通讯录作业独立放 ~/projects/contacts。"
             ],
             "steps": [
@@ -25,8 +25,8 @@
                 "title": "确认进入的是 Ubuntu 终端",
                 "minutes": 25,
                 "actions": [
-                  "在 Windows Terminal 打开 Ubuntu 标签页，或先在 PowerShell 执行 wsl -d Ubuntu；之后本任务命令都在 Ubuntu 终端执行。",
-                  "执行身份和系统检查，预期 whoami 为 mzzzmnq、系统信息含 Ubuntu 22.04；只记录实际版本，不为匹配截图重装。",
+                  "在 Windows Terminal 打开 Ubuntu 标签页，或先在 PowerShell 执行 wsl -d Ubuntu-24.04 -u caolingyun；之后本任务命令都在 Ubuntu 终端执行。",
+                  "执行身份和系统检查，预期 whoami 为 caolingyun、系统信息含 Ubuntu 24.04；只记录实际版本，不为匹配截图重装。",
                   "若看到 C:\\ 路径或命令不认识，先确认终端类型；Go 检查失败时记录 which/输出，把问题定位到当前发行版或 PATH。"
                 ],
                 "commands": [
@@ -42,15 +42,16 @@
                 "title": "画出两个文件系统与目录边界",
                 "minutes": 30,
                 "actions": [
-                  "理解 ~ 在当前用户下代表 /home/mzzzmnq；/mnt/c 是 Windows C 盘入口，D:\\Projects 属于另一套路径。",
+                  "理解 ~ 在当前用户下代表 /home/caolingyun；/mnt/c 是 Windows C 盘入口，D:\\Codex_project 属于 Windows 路径，对应 /mnt/d/Codex_project。",
                   "只读查看现有 TodoList 目录，再建立独立 contacts 目录；每次操作前用 pwd 确认，不能进入 TodoList/data 写练习文件。",
-                  "从 contacts 执行 code .，确认 VSCode 左下角显示 WSL: Ubuntu，集成终端 pwd 仍是通讯录目录。"
+                  "已配置 VS Code WSL 扩展时从 contacts 执行 code .，确认左下角为 WSL: Ubuntu-24.04；未配置时先用 nano main.go 编辑，终端 pwd 应为通讯录目录。"
                 ],
                 "commands": [
                   "ls -ld ~/projects/go-linux-study-todolist",
                   "mkdir -p ~/projects/contacts",
                   "cd ~/projects/contacts",
                   "pwd",
+                  "# 仅已配置 VS Code WSL 扩展时执行；否则可用 nano main.go：",
                   "code ."
                 ]
               },
@@ -103,7 +104,7 @@
             ],
             "acceptance": [
               "Ubuntu 中 whoami、Go 和 Git 版本检查有真实输出记录。",
-              "说清 /home/mzzzmnq/projects/contacts 与 Windows 路径的关系，并能从新终端进入。",
+              "说清 /home/caolingyun/projects/contacts 与 Windows 路径的关系，并能从新终端进入。",
               "自己编写的 main.go 可运行，输出个人化问候；编译产物也可单独执行。",
               "能复述并修复至少两条编译错误，未修改 TodoList/data。"
             ],
@@ -1439,7 +1440,7 @@
           "details": {
             "objective": "理解owner/group/other的rwx权限、标准输出与错误输出、重定向和管道；在练习文件上观察Go读取权限错误并恢复。",
             "prerequisites": [
-              "会pwd、cat、cp与man；以mzzzmnq普通用户进行练习。",
+              "会pwd、cat、cp与man；以caolingyun普通用户进行练习。",
               "仅操作contacts/exercises/permissions，不改TodoList或整个家目录权限。"
             ],
             "steps": [
@@ -2407,7 +2408,7 @@
                   "go build -o contacts-demo .",
                   "./contacts-demo serve",
                   "ss -lntp 'sport = :8080'",
-                  "ps -u mzzzmnq -o pid,ppid,stat,args"
+                  "ps -u caolingyun -o pid,ppid,stat,args"
                 ]
               },
               {
@@ -2436,7 +2437,7 @@
                 ],
                 "commands": [
                   "cd ~/projects/contacts",
-                  "ps -u mzzzmnq -o pid,ppid,args",
+                  "ps -u caolingyun -o pid,ppid,args",
                   "kill -TERM <已确认的本人通讯录PID>",
                   "ss -lntp 'sport = :8080'"
                 ]
@@ -2813,7 +2814,7 @@
             "objective": "在已配置的WSL Ubuntu中先检测再安装MySQL，用专用学习库和受限账号建立联系人表，避免与现有文件或TodoList数据混用。",
             "prerequisites": [
               "第3周~/projects/contacts的HTTP服务可在127.0.0.1:8080运行，文件写入有互斥与安全保存",
-              "当前Ubuntu22.04.4用户mzzzmnq、Go1.27.2已装，PID1为init，未启systemd",
+              "本机 Ubuntu 24.04.5、用户 caolingyun、Go 1.27.2 已核实；PID 1 为 systemd，换电脑时重新检查",
               "MySQL尚未确认存在，本任务先核验，不预设服务可用"
             ],
             "steps": [
@@ -2822,7 +2823,7 @@
                 "minutes": 25,
                 "actions": [
                   "在Ubuntu终端检查mysql客户端、mysqld包及3306监听，记录实际版本/是否缺失",
-                  "检查PID1及/etc/init.d/mysql；本机不能无条件执行systemctl",
+                  "检查 PID 1；本机使用 systemd，其他环境按实际初始化系统选择 systemctl 或 service",
                   "确认项目pwd，TodoList8787与contacts8080都不是MySQL端口"
                 ],
                 "commands": [
@@ -2839,7 +2840,7 @@
                 "minutes": 40,
                 "actions": [
                   "仅当缺少服务器时按官方Ubuntu文档使用apt安装mysql-server；已有则先查版本，不重复配置",
-                  "PID1为init且存在mysql启动脚本时用sudo service mysql start/status，脚本缺失先查安装日志",
+                  "PID 1 为 systemd 时使用 sudo systemctl start/status mysql；其他环境仅在存在 mysql 启动脚本时使用 sudo service mysql start/status",
                   "保持回环/本机使用，用sudo mysql验证管理员连接，记录服务实际启动结果"
                 ],
                 "commands": [
@@ -2847,6 +2848,9 @@
                   "# 仅缺少mysql-server时：",
                   "sudo apt update",
                   "sudo apt install mysql-server",
+                  "# PID 1 为 systemd 时（本机当前配置）：",
+                  "sudo systemctl start mysql",
+                  "sudo systemctl status mysql",
                   "# 仅检测到/etc/init.d/mysql且PID1非systemd时：",
                   "sudo service mysql start",
                   "sudo service mysql status",
@@ -2907,7 +2911,7 @@
             "pitfalls": [
               {
                 "problem": "systemctl提示系统未以systemd启动",
-                "solution": "当前PID1是init；核对Ubuntu包及启动脚本，按条件用service，不能把重装Go当修复。"
+                "solution": "先运行 ps -p 1 -o comm= 核实当前环境；非 systemd 环境核对 Ubuntu 包及启动脚本后使用 service。"
               },
               {
                 "problem": "手机号前导零丢失或空名字仍入库",
@@ -3302,7 +3306,7 @@
             "objective": "用Linux进程、线程、文件描述符与日志观察一次HTTP到数据库访问，按边界定位连接失败而非盲目重启。",
             "prerequisites": [
               "~/projects/contacts的HTTP8080与MySQL本机连接可用",
-              "日常Ubuntu用户mzzzmnq不以root运行Go",
+              "日常Ubuntu用户caolingyun不以root运行Go",
               "只读观察自己的进程，不停止TodoList8787或共用数据库"
             ],
             "steps": [
@@ -3716,7 +3720,7 @@
             "objective": "把已完成的通讯录经验迁移到独立预约项目；先确定可交付范围和请求路径，再写最小可运行骨架。",
             "prerequisites": [
               "第4周通讯录能启动并连接学习MySQL",
-              "在WSL Ubuntu中以mzzzmnq操作，已有Go1.27.2/Git，无须重新安装",
+              "在WSL Ubuntu中以caolingyun操作，已有Go1.27.2/Git，无须重新安装",
               "本周总预算20小时，先不开前端、短信和审批流程"
             ],
             "steps": [
@@ -4200,7 +4204,7 @@
             "objective": "看懂Shell配置如何进入Go进程，以及本机地址、DNS、TCP、HTTP的实际观测边界。保留可分享的观察，不打印当前Shell的敏感配置。",
             "prerequisites": [
               "预约服务监听127.0.0.1:8081",
-              "在Ubuntu日常用户mzzzmnq终端操作",
+              "在Ubuntu日常用户caolingyun终端操作",
               "已有非敏感APP_ADDR与APP_ENV配置，密码不打印"
             ],
             "steps": [
@@ -7258,7 +7262,7 @@
           "resourceURL": "https://liwenzhou.com/posts/go/golang-menu/",
           "resourceLabel": "李文周：Go 操作 Redis",
           "details": {
-            "objective": "在Ubuntu22.04中为预约项目接入独立学习Redis，理解字符串键、过期与连接失败；把缓存视为可丢失的派生数据，而不是预约是否成功的依据。",
+            "objective": "在Ubuntu24.04中为预约项目接入独立学习Redis，理解字符串键、过期与连接失败；把缓存视为可丢失的派生数据，而不是预约是否成功的依据。",
             "prerequisites": [
               "第8周lab-booking能连接本机MySQL；只使用合成设备数据。",
               "已安装Go1.27.2和Git；Redis尚未安装时先确认环境，不重复重装Go。"
@@ -7268,7 +7272,7 @@
                 "title": "确认进程与安装路线",
                 "minutes": 30,
                 "actions": [
-                  "进入WSL的Ubuntu22.04，核对当前用户与Redis客户端、服务端版本，把检测结果写入本周笔记。",
+                  "进入WSL的Ubuntu24.04，核对当前用户与Redis客户端、服务端版本，把检测结果写入本周笔记。",
                   "已有Redis则复用学习实例；缺少时按官方安装说明准备本机实例，记录选用的启动方式并限制回环监听。"
                 ],
                 "commands": [
@@ -7618,7 +7622,7 @@
                 "title": "固定测量条件",
                 "minutes": 30,
                 "actions": [
-                  "记下Ubuntu22.04、Go版本、CPU/内存、设备条数、SQL索引、TTL和提交号。",
+                  "记下Ubuntu24.04、Go版本、CPU/内存、设备条数、SQL索引、TTL和提交号。",
                   "写清并发1/10/30、预热请求数与正式请求数，关闭其他主动压测；认证和分页参数保持一致。"
                 ],
                 "commands": [
@@ -8118,7 +8122,7 @@
           "details": {
             "objective": "把预约API编译成可说明构建与运行差异的镜像，在本机回环端口启动并使用非root身份；先检测已有Docker路线再选择安装。",
             "prerequisites": [
-              "Ubuntu22.04的mzzzmnq可运行lab-booking，知道Go入口位置。",
+              "Ubuntu24.04的caolingyun可运行lab-booking，知道Go入口位置。",
               "Go/Git/VSCode已装好；镜像使用与项目go.mod兼容且明确固定的Go版本。"
             ],
             "steps": [
@@ -8126,14 +8130,14 @@
                 "title": "检查Docker与WSL路线",
                 "minutes": 30,
                 "actions": [
-                  "Windows终端确认Ubuntu22.04是WSL2；Ubuntu内检查Docker版本、context与PID1。当前WSL尚未确认systemd，不能直接假定systemctl可用。",
+                  "Windows 终端确认当前发行版是 WSL2；Ubuntu 内检查 Docker 版本、context 与 PID 1。本机 Ubuntu-24.04 已启用 systemd，其他电脑应重新核实。",
                   "已有Docker Desktop就开启对应发行版WSL集成并复用；若选WSL内Engine则按Ubuntu官方路线安装。两种只选一种，避免双daemon混用。",
                   "缺版本才按官方路线安装；Engine若需启用systemd，先保存工作，说明重启WSL会停止TodoList与数据库，再依WSL官方步骤处理；不开放daemon端口。"
                 ],
                 "commands": [
                   "# Windows PowerShell 中执行",
                   "wsl --list --verbose",
-                  "# 以下在 Ubuntu22.04 终端中执行",
+                  "# 以下在 Ubuntu24.04 终端中执行",
                   "cd ~/projects/lab-booking",
                   "docker version",
                   "docker context ls",
